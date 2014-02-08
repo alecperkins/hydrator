@@ -150,7 +150,7 @@ Requires [node.js](http://nodejs.org).
 
 1. Clone the repo
 
-  `$ git clone git@github.com/alecperkins/hydra.git`
+  `$ git clone https://github.com/alecperkins/hydra.git`
 
 2. Install dependencies
 
