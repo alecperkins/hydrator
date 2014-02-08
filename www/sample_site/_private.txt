@@ -1,0 +1,1 @@
+Private! This file cannot be accessed via the web. Eventually there will be scoped readFile and require functions that will allow the dynamic routes to access otherwise hidden files.

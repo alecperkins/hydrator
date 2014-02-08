@@ -1,0 +1,38 @@
+{
+  "name": "hydra",
+  "version": "0.1.0",
+  "description": "Multi-tenant, semi-static web hosting application.",
+  "engines": {
+    "node": "0.11.x",
+    "npm": "1.2.x"
+  },
+  "dependencies": {
+    "coffee-script": "1.x.x",
+    "mocha": "*",
+    "should": "*",
+    "mime": "~1.2.11",
+    "marked": "~0.3.1",
+    "string": "~1.8.0",
+    "restler": "~3.1.0",
+    "underscore": "~1.5.2"
+  },
+  "scripts": {
+    "start": "node_modules/.bin/coffee main.coffee",
+    "test": "node_modules/.bin/mocha --compilers coffee:coffee-script/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alecperkins/hydra.git"
+  },
+  "author": "Alec Perkins <alec@marquee.by>",
+  "license": {
+    "type": "Unlicense",
+    "url": "https://raw.github.com/alecperkins/hydra/master/LICENSE"
+  },
+  "contributors": [
+    {
+      "name": "Alec Perkins",
+      "email": "alec@marquee.by"
+    }
+  ]
+}

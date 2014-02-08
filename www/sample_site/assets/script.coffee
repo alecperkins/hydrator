@@ -1,0 +1,1 @@
+console.log('Script 1, which is sourced by CoffeeScript and compiled first.')
