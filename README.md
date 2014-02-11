@@ -1,11 +1,12 @@
-Hydra
+Hydro
 =====
 
-Hydra is a multi-tenant, semi-static web hosting application. In addition to
-serving flat files, it can compile certain file types on the fly. Also, it
-can execute [CoffeeScript](http://coffeescript.org)-based files that match
-certain URL paths, allowing them to dynamically construct a response. It’s
-best used for small, mostly static, low-traffic “single-serving” sites.
+Hydro is a multi-tenant, semi-static web hosting application that serves
+“rehydrated static files”. In addition to serving flat files, it can
+compile certain file types on the fly. Also, it can execute
+[CoffeeScript](http://coffeescript.org)-based files that match certain
+URL paths, allowing them to dynamically construct a response. It’s best
+used for small, mostly static, low-traffic “single-serving” sites.
 
 For example, the following project structure maps to these URLs:
 
@@ -150,7 +151,7 @@ Requires [node.js](http://nodejs.org).
 
 1. Clone the repo
 
-  `$ git clone https://github.com/alecperkins/hydra.git`
+  `$ git clone https://github.com/alecperkins/hydro.git`
 
 2. Install dependencies
 
