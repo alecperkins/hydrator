@@ -1,5 +1,5 @@
 {
-  "name": "hydra",
+  "name": "hydro",
   "version": "0.1.0",
   "description": "Multi-tenant, semi-static web hosting application.",
   "engines": {
@@ -22,12 +22,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/alecperkins/hydra.git"
+    "url": "git://github.com/alecperkins/hydro.git"
   },
   "author": "Alec Perkins <alec@marquee.by>",
   "license": {
     "type": "Unlicense",
-    "url": "https://raw.github.com/alecperkins/hydra/master/LICENSE"
+    "url": "https://raw.github.com/alecperkins/hydro/master/LICENSE"
   },
   "contributors": [
     {
