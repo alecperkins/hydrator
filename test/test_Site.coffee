@@ -1,12 +1,12 @@
 require 'should'
 
 
-
-describe 'App.getTargetFilePaths', ->
-    { getTargetFilePaths } = require '../App.coffee'
+describe 'Site._getTargetFilePaths', ->
+    Site = require '../source/Site.coffee'
 
     withInput = (input_path) ->
-        return getTargetFilePaths(input_path).map (f) -> [f.path, f.executable]
+        site = new Site('.')
+        return site._getTargetFilePaths(input_path).map (f) -> [f.path, f.executable]
 
     it 'should choose index files', ->
         withInput([]).should.eql([

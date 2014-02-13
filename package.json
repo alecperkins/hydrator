@@ -1,33 +1,42 @@
 {
-  "name": "hydro",
-  "version": "0.1.0",
-  "description": "Multi-tenant, semi-static web hosting application.",
+  "name": "hydrator",
+  "version": "0.0.1",
+  "description": "Rehydrated static files.",
   "engines": {
     "node": "0.11.x",
     "npm": "1.2.x"
   },
   "dependencies": {
-    "coffee-script": "1.x.x",
-    "mocha": "*",
-    "should": "*",
+    "coffee-script": "~1.7.1",
     "mime": "~1.2.11",
     "marked": "~0.3.1",
     "string": "~1.8.0",
-    "restler": "~3.1.0",
-    "underscore": "~1.5.2"
+    "underscore": "~1.6.0",
+    "restler": "~3.1.0"
+  },
+  "devDependencies": {
+    "gulp": "~3.5.2",
+    "gulp-util": "~2.2.14",
+    "gulp-coffee": "~1.4.1",
+    "mocha": "~1.17.1",
+    "should": "~3.1.2"
   },
   "scripts": {
-    "start": "node_modules/.bin/coffee main.coffee",
     "test": "node_modules/.bin/mocha --compilers coffee:coffee-script/register"
   },
+  "bin": {
+    "hydrator": "./bin/hydrator"
+  },
+  "homepage": "https://github.com/alecperkins/hydrator",
+  "bugs": "https://github.com/alecperkins/hydrator/issues",
   "repository": {
     "type": "git",
-    "url": "git://github.com/alecperkins/hydro.git"
+    "url": "git://github.com/alecperkins/hydrator.git"
   },
   "author": "Alec Perkins <alec@marquee.by>",
   "license": {
     "type": "Unlicense",
-    "url": "https://raw.github.com/alecperkins/hydro/master/LICENSE"
+    "url": "https://raw.github.com/alecperkins/hydrator/master/LICENSE"
   },
   "contributors": [
     {

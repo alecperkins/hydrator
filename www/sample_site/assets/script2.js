@@ -1,1 +1,0 @@
-console.log('Script 2, which is just regular JS and returned as-is.');
