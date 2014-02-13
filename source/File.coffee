@@ -62,7 +62,7 @@ _       = require 'underscore'
 restler = require 'restler'
 vm      = require 'vm'
 
-DEBUG = true # process.env.DEBUG
+DEBUG = process.env.DEBUG
 
 vmRequire = (path, sandbox, res) ->
     fs.readFile require.resolve(path), (err, code) ->
