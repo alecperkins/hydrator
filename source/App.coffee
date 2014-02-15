@@ -2,15 +2,43 @@ http    = require 'http'
 url     = require 'url'
 util    = require 'util'
 path    = require 'path'
+fs      = require 'fs'
+
+{ exec } = require 'child_process'
 
 Site    = require './Site'
 
 PORT    = process.env.PORT or 5000
 
 
+PROJECT_DEFAULTS =
+    'package.json': (ctx) -> JSON.stringify({
+            name        : ctx.name
+            version     : '0.0.1'
+            description : 'A Hydrator-powered app.'
+            engines:
+                node : '0.11.x'
+                npm  : '~1.3.0'
+            dependencies:
+                hydrator: "~#{ ctx.hydrator_version }"
+        }, 4)
+    '.gitignore': (ctx) -> 'node_modules\n.env\n.DS_Store'
+    '.env': (ctx) -> ''
+    'Procfile': (ctx) -> 'web: ./node_modules/.bin/hydrator serve'
+    'README.md': (ctx) -> """#{ ctx.name }
+            #{ ('=' for i in [0...ctx.name.length]).join('') }\n
+        """
+
+PROJECT_DEFAULTS[path.join('www','index.coffee')] = (ctx) -> """
+            response.ok("<h1>Hello, world!</h1><p>\#{ new Date() }</p>")
+        """
+
+
+
 
 class App
-    constructor: ->
+    constructor: (hydrator_package) ->
+        @_hydrator_package = hydrator_package
         @_config = {}
         @_sites = {}
 
@@ -52,6 +80,35 @@ class App
                 util.log("#{ req.method } #{ req.headers.host }#{ req.url } - 404")
                 res.writeHead(404)
                 res.end('404 Not Found')
+
+    create: (project_path, target) ->
+        if fs.existsSync(project_path)
+            console.log("\n#{ target } already exists. Aborting...\n")
+            process.exit(1)
+
+        console.log("\nCreating project: #{ target }...\n")
+
+        console.log("-> #{ target }#{ path.sep }")
+        fs.mkdirSync(project_path)
+
+        console.log("-> #{ path.join(target,'www') }#{ path.sep }")
+        fs.mkdirSync(path.join(project_path, 'www'))
+
+        for f_name, content_fn of PROJECT_DEFAULTS
+            console.log("-> #{ path.join(target, f_name) }")
+            fs.writeFileSync path.join(project_path, f_name), content_fn
+                name                : target
+                hydrator_version    : @_hydrator_package.version
+
+        console.log('\nrunning: git init')
+        exec 'git init', cwd: project_path, (error, stdout, stderr) ->
+            throw error if error?
+            console.log """\n
+                    #{ stdout }
+
+                    Project #{ target } created.
+                    Start it with `hydrator serve #{ target }`\n
+                """
 
 
 

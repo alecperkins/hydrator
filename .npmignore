@@ -3,3 +3,4 @@ test
 node_modules
 .DS_store
 gulpfile.js
+.travis.yml
