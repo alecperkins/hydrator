@@ -5,7 +5,7 @@ Hydrator - rehydrated static files
 
 Hydrator is a small web application framework for semi-static sites. It maps URL paths to files, compiling certain kinds of assets on-the-fly, as appropriate. Hydrator also allows for dynamic content, with CoffeeScript files that can be executed to generate a response.
 
-Static files (`.html`, `.js`, `.css`, `.jpg`, etc) are passed through. Compilable files (`.md`, `.coffee`) are compiled and returned. `.coffee` files in the root project folder are treated as dynamic content handlers. Instead of being compiled and returned, they are executed inside a sandbox and given helpers for generating a response.
+Static files (`.html`, `.js`, `.css`, `.jpg`, …) are passed through. Compilable files (`.md`, `.coffee`) are compiled and returned. `.coffee` files in the root project folder are treated as dynamic content handlers. Instead of being compiled and returned, they are executed inside a sandbox and given helpers for generating a response.
 
 The bare minimum for a dynamic file is calling `response.ok()` with response text:
 
@@ -122,7 +122,7 @@ The sandbox globals are:
 
     * `query`
     
-       The parse query parameters of the URL, eg `{ parameter: 'value' }`.
+       The parsed query parameters of the URL, eg `{ parameter: 'value' }`.
 
     * `query_string`
     
@@ -146,27 +146,18 @@ The sandbox globals are:
 
   They generally follow the signature `function(response_data, headers={})`.
 
-    * `ok` (200)
-    * `created` (201)
-    * `noContent` (204)
-
-       Does not take `response_data`.
-
-    * `permanentRedirect` (301)
-
-       `response_data` becomes the `Location` header.
-
-    * `temporaryRedirect` (302)
-
-       `response_data` becomes the `Location` header.
-
-    * `badRequest` (400)
-    * `unauthorized` (401)
-    * `forbidden` (403)
-    * `notFound` (404)
-    * `methodNotAllowed` (405)
-    * `gone` (410)
-    * `internalServerError` (500)
+    * (200) `ok`
+    * (201) `created`
+    * (204) `noContent` - Does not take `response_data`
+    * (301) `permanentRedirect` - `response_data` becomes the `Location` header
+    * (302) `temporaryRedirect` - `response_data` becomes the `Location` header.
+    * (400) `badRequest`
+    * (401) `unauthorized`
+    * (403) `forbidden`
+    * (404) `notFound`
+    * (405) `methodNotAllowed`
+    * (410) `gone`
+    * (500) `internalServerError`
 
 
 #### Mult-tenant
@@ -174,24 +165,22 @@ The sandbox globals are:
 A single project can support multiple sites, differentiated by host. To do this, group the content for each site into its own folder within the project’s `www/` folder. Then, in `package.json`, add an entry that maps the hosts to the folder names, like so:
 
 ```json
-    …
-    "hydrator": {
-      "sites": {
-        "example.com": "site_name",
-        "otherhost": "other_site"
-      }
-    },
-    …
+  "hydrator": {
+    "sites": {
+      "example.com": "site_name",
+      "otherhost": "other_site"
+    }
+  }
 ```
 
-Each folder name will be the root of the site as matched by the host.
+Each folder name will be the root of the site as matched by the host. Note: you can omit the `www.` from the domain. It will be stripped when matching, so `www.example.com` and `example.com` would both match `site_name`.
 
 
 ## Examples
 
 Some example single-serving sites:
 
-* [Sample site](http://app-hydra.herokuapp.com)
+* [Sample site](http://hydrator.herokuapp.com) ([source](https://github.com/alecperkins/hydrator-sample-site))
 * [#flooralpatterns](http://flooralpatterns.net)
 * [URLTEXT](http://urltext.cc)
 * [nothisisepic.com](http://nothisisepic.com)
