@@ -94,6 +94,12 @@ class Site
                 [last_c[...-1]..., 'coffee'].join('.')
             ]
             paths.push(new CompilableFile(this, alt_version...))
+        else if last_c[last_c.length - 1] is 'css'
+            alt_version = [
+                path_components[...- 1]...
+                [last_c[...-1]..., 'styl'].join('.')
+            ]
+            paths.push(new CompilableFile(this, alt_version...))
         else if last_c[last_c.length - 1] is 'html'
             alt_version = [
                 path_components[...- 1]...

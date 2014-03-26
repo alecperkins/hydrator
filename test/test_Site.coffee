@@ -71,6 +71,11 @@ describe 'Site._getTargetFilePaths', ->
             ['test1/test2.coffee', false]
             ['*.coffee', true]
         ])
+        withInput(['test1','test2.css']).should.eql([
+            ['test1/test2.css', false]
+            ['test1/test2.styl', false]
+            ['*.coffee', true]
+        ])
         withInput(['test1','test2.html']).should.eql([
             ['test1/test2.html', false]
             ['test1/test2.md', false]
@@ -79,6 +84,11 @@ describe 'Site._getTargetFilePaths', ->
         withInput(['test1','test2','test3.js']).should.eql([
             ['test1/test2/test3.js', false]
             ['test1/test2/test3.coffee', false]
+            ['*.coffee', true]
+        ])
+        withInput(['test1','test2','test3.css']).should.eql([
+            ['test1/test2/test3.css', false]
+            ['test1/test2/test3.styl', false]
             ['*.coffee', true]
         ])
         withInput(['test1','test2','test3.html']).should.eql([

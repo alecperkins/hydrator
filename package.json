@@ -1,6 +1,6 @@
 {
   "name": "hydrator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Rehydrated static files.",
   "engines": {
     "node": "0.11.x",
@@ -12,7 +12,9 @@
     "marked": "~0.3.1",
     "string": "~1.8.0",
     "underscore": "~1.6.0",
-    "restler": "~3.1.0"
+    "restler": "~3.1.0",
+    "stylus": "~0.42.3",
+    "nib": "~1.0.2"
   },
   "devDependencies": {
     "gulp": "~3.5.2",

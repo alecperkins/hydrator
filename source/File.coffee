@@ -30,6 +30,8 @@ class StaticFile extends File
 
 CoffeeScript    = require 'coffee-script'
 marked          = require 'marked'
+Stylus          = require 'stylus'
+Nib             = require 'nib'
 
 class CompilableFile extends File
     compilable: true
@@ -47,6 +49,15 @@ class CompilableFile extends File
                 return [
                     CoffeeScript.compile(file_data.toString())
                     'application/javascript'
+                ]
+            when 'styl'
+                # Not async, just bonkers.
+                compiled_style = null
+                Stylus(file_data.toString()).use(Nib()).render (err, data) ->
+                    compiled_style = data
+                return [
+                    compiled_style
+                    'text/css'
                 ]
             when 'md'
                 return [

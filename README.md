@@ -5,7 +5,7 @@ Hydrator - rehydrated static files
 
 Hydrator is a small web application framework for semi-static sites. It maps URL paths to files, compiling certain kinds of assets on-the-fly, as appropriate. Hydrator also allows for dynamic content, with CoffeeScript files that can be executed to generate a response.
 
-Static files (`.html`, `.js`, `.css`, `.jpg`, …) are passed through. Compilable files (`.md`, `.coffee`) are compiled and returned. `.coffee` files in the root project folder are treated as dynamic content handlers. Instead of being compiled and returned, they are executed inside a sandbox and given helpers for generating a response.
+Static files (`.html`, `.js`, `.css`, `.jpg`, …) are passed through. Compilable files (`.md`, `.coffee`, `.styl`) are compiled and returned. `.coffee` files in the root project folder are treated as dynamic content handlers. Instead of being compiled and returned, they are executed inside a sandbox and given helpers for generating a response.
 
 The bare minimum for a dynamic file is calling `response.ok()` with response text:
 
@@ -73,7 +73,7 @@ For example, the following project structure maps to these URLs:
                 info.md         - /some-path/info/      or /some-path/info.html
             assets/
                 script.coffee   - /assets/script.js
-                style.css       - /assets/style.css
+                style.styl      - /assets/style.css
                 icon.png        - /assets/icon.png
             other-files/
                 module.coffee   - /other-files/module.js
