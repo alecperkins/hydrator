@@ -106,7 +106,10 @@ class ExecutableFile extends File
         # TODO: Optimize by pre-compiling (or caching compiling)
         vmRequire @full_path,
             console         : console
-            require         : null
+            require         : require
+            Buffer          : Buffer
+            _raw_request    : req
+            _raw_response   : res
             readFile        : null # TODO: replace with an fs scoped to site folder
             readFileSync    : null
             _               : _
