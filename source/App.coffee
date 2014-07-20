@@ -57,7 +57,7 @@ class TenantCache
         _key = "#{ site }:#{ key }"
         @_cache.get _key, (err, val) ->
             if err
-                logErr(err)
+                console.log(err)
                 callback(null)
             else
                 val = val?.toString() or null

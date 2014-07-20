@@ -1,6 +1,6 @@
 {
   "name": "hydrator",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Rehydrated static files.",
   "engines": {
     "node": "0.11.x",
