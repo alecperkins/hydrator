@@ -86,11 +86,12 @@ vmRequire = (path, sandbox, res) ->
 
 class ExecutableFile extends File
     executable: true
-    constructor: (@_site, component) ->
+    constructor: (site, component) ->
+        @_site = site
         @path = "#{ component }.coffee"
         @full_path = path.join(@_site.root, @path)
 
-    respond: (req, res) ->
+    respond: (req, res, cache) ->
 
         _sendResponse = (code, data='', headers={}) ->
             if not data.charAt?
@@ -115,6 +116,11 @@ class ExecutableFile extends File
             _               : _
             string          : string
             marked          : marked
+            cache:
+                get: (key, cb) =>
+                    cache.get(@_site.name, key, cb)
+                set: (key, value) =>
+                    cache.set(@_site.name, key, value)
             env             : process.env
             restler         : restler
             request:

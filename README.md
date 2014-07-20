@@ -159,6 +159,16 @@ The sandbox globals are:
     * (410) `gone`
     * (500) `internalServerError`
 
+* `cache`
+  
+  Basic key-value caching of JSON-serializable data for 1 second to 1 hour (default 240 seconds).
+
+  Set the cache with `cache.set('key', value, expires=240)`.
+  Get a cached value `cache.get('key', function(val) { })`.
+
+  In multi-tenant setups, the keys are segregated by site host.
+
+
 
 #### Mult-tenant
 

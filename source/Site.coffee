@@ -2,8 +2,9 @@
 { CompilableFile, ExecutableFile, StaticFile } = require './File'
 
 class Site
-    constructor: (site_root) ->
+    constructor: (site_root, name) ->
         @root = site_root
+        @name = name
 
     getTargetFile: (path_components) ->
         for f in @_getTargetFilePaths(path_components)

@@ -3,6 +3,7 @@ url     = require 'url'
 util    = require 'util'
 path    = require 'path'
 fs      = require 'fs'
+memjs   = require 'memjs'
 
 { exec } = require 'child_process'
 
@@ -34,6 +35,50 @@ PROJECT_DEFAULTS[path.join('www','index.coffee')] = (ctx) -> """
         """
 
 
+getCacheServerURI = ->
+    server_uri = null
+    password = process.env.MEMCACHIER_PASSWORD
+    servers = process.env.MEMCACHIER_SERVERS
+    username = process.env.MEMCACHIER_USERNAME
+    if username and password and servers
+        server_uri = servers.split(',').map (s) -> "#{ username }:#{ password }@#{ s }"
+        server_uri = server_uri.join(',')
+    return server_uri
+
+class TenantCache
+    constructor: ->
+        server_uri = getCacheServerURI()
+        if server_uri
+            @_cache = memjs.Client.create(server_uri, expires: 240) # 240 seconds
+    get: (site, key, callback) ->
+        unless site and key and @_cache
+            callback(null)
+            return
+        _key = "#{ site }:#{ key }"
+        @_cache.get _key, (err, val) ->
+            if err
+                logErr(err)
+                callback(null)
+            else
+                val = val?.toString() or null
+                if val
+                    val = JSON.parse(val)
+                callback(val)
+        return
+    set: (site, key, value, expires=240) ->
+        unless site and key and value and @_cache
+            return
+
+        # Restrict expiration to between 1 second and 1 hour, inclusive.
+        expires = Number(expires)
+        unless expires and 1 <= expires <= 3600
+            expires = 240
+        _key = "#{ site }:#{ key }"
+        logErr = (err) ->
+            console.log(err) if err
+        @_cache.set(_key, JSON.stringify(value), logErr, expires)
+        return 
+
 
 
 class App
@@ -46,11 +91,13 @@ class App
         if package_data.hydrator?.sites?
             @_config.multi = true
             for h, p of package_data.hydrator.sites
-                @_sites[h] = new Site(path.join(site_path, p))
+                @_sites[h] = new Site(path.join(site_path, p), h)
             @_server = http.createServer(@_handleRequest)
         else
             @_config.multi = false
-            @_default_site = new Site(site_path)
+            @_default_site = new Site(site_path, 'default')
+
+        @_cache = new TenantCache()
         @_server = http.createServer(@_handleRequest)
         util.log("Server listening on http://localhost:#{ PORT }")
         @_server.listen(PORT)
@@ -75,7 +122,7 @@ class App
 
             if target_file
                 util.log("#{ req.method } #{ req.headers.host }#{ req.url } - #{ target_file.path }")
-                target_file.respond(req, res)
+                target_file.respond(req, res, @_cache)
             else
                 util.log("#{ req.method } #{ req.headers.host }#{ req.url } - 404")
                 res.writeHead(404)
