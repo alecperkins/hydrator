@@ -77,7 +77,7 @@ class TenantCache
         logErr = (err) ->
             console.log(err) if err
         @_cache.set(_key, JSON.stringify(value), logErr, expires)
-        return 
+        return
 
 
 

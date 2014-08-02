@@ -140,6 +140,10 @@ The sandbox globals are:
         
        The headers of the request, eg `{ 'Accepts': 'application/json' }`.
 
+    * `getForm`
+
+       Get the submitted form from a POST request: `request.getForm (fields) ->`
+
 * `response`
 
   Functions for sending a response. Each corresponds to a specific response status code. Only one function can be called once per request. These methods can generally all take JSON-serializable data in addition to Strings, and will serialize and set the appropriate `Content-Type` if that is the case.

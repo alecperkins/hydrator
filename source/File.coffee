@@ -72,6 +72,7 @@ string  = require 'string'
 _       = require 'underscore'
 restler = require 'restler'
 vm      = require 'vm'
+formidable = require 'formidable'
 
 DEBUG = process.env.DEBUG
 
@@ -83,6 +84,7 @@ vmRequire = (path, sandbox, res) ->
         catch e
             res.writeHead(500)
             res.end("500 Server Error: #{ if DEBUG then e.toString() else '' }")
+
 
 class ExecutableFile extends File
     executable: true
@@ -132,6 +134,10 @@ class ExecutableFile extends File
                 host            : req.headers.host
                 method          : req.method
                 headers         : req.headers
+                getForm: (cb) ->
+                    form = new formidable.IncomingForm()
+                    form.parse req, (err, fields, files) ->
+                        cb(fields)
             response:
                 # (data, headers={})
                 ok                  : -> _sendResponse(200, arguments...)
