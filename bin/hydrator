@@ -11,3 +11,29 @@ var command_path = path.join(
 );
 
 require(command_path).run();
+
+var cli = require('cli');
+var execCommand = require('../lib/execCommand');
+var pkg = require('../package.json');
+
+cli.setApp(pkg.name, pkg.version);
+cli.enable('help', 'version', 'status');
+
+cli.parse({
+        host        : ['-h', 'The host to serve on or deploy to', 'string', 'localhost'],
+        port        : ['-p', 'The port to serve on', 'number', 5000],
+        email       : ['-e', 'Your email address (for verification)', 'email'],
+        auto        : ['-a', 'Auto-generate a host', 'bool', false],
+        production  : [null, 'Serve the project in production mode (minify files)', 'bool', false],
+        sample      : [null, 'Create using a sample project', 'bool', false]
+    },
+    execCommand.COMMANDS
+);
+
+cli.main(function (args, options) {
+    execCommand({
+        command : cli.command,
+        args    : args,
+        options : options,
+    });
+});

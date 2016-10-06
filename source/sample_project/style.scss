@@ -1,0 +1,13 @@
+$max_width: 800px
+
+body {
+    font-size           : 24px;
+    margin              : 0 auto;
+    max-width           : $max_width;
+    transition-duration : 0.2s;
+    transition-property : font-size;
+}
+
+button {
+    cursor: pointer;
+}
